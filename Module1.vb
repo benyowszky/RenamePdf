@@ -59,7 +59,10 @@ Module Module1
                         Dim words As String() = remainingText.Split(" "c, vbTab, vbCr, vbLf)
                         For Each word As String In words
                             If Not String.IsNullOrWhiteSpace(word) Then
-                                Return System.IO.Path.GetInvalidFileNameChars().Aggregate(word, Function(current, c) current.Replace(c, "_"))
+                                ' Érvénytelen karakterek lecserélése alulvonásra
+                                Dim invalidChars As Char() = System.IO.Path.GetInvalidFileNameChars()
+                                Dim cleanedWord As String = invalidChars.Aggregate(word, Function(current, c) current.Replace(c, "_"))
+                                Return cleanedWord
                             End If
                         Next
                     End If
@@ -70,5 +73,6 @@ Module Module1
         End Try
         Return String.Empty
     End Function
+
 
 End Module
